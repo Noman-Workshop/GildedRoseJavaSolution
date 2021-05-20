@@ -27,7 +27,7 @@ task createSnapshot(type: Zip) {
     archivesBaseName = "InventoryOfDrinks"
     destinationDirectory = file("snapshots")
     from "."
-    excludes = [".gradle", ".idea", "snapshots"]
+    include "src/**", "build/reports/**", "build.gradle"
 }
 
 build.mustRunAfter clean
