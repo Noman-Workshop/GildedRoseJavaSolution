@@ -1,5 +1,7 @@
 package inventory;
 
+import drink.Updaters;
+
 public class ImprovedItem extends Item {
 	
 	public interface Updater {
@@ -7,7 +9,7 @@ public class ImprovedItem extends Item {
 		void onDayEnd(ImprovedItem item);
 	}
 	
-	private Updater updater;
+	private Updater updater = Updaters.DEFAULT.getUpdater();
 	
 	private ImprovedItem(String name, int sellIn, int quality) {
 		super(name, sellIn, quality);
