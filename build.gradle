@@ -24,9 +24,10 @@ test {
 
 task createSnapshot(type: Zip) {
     dependsOn "clean", "build"
-    tasks.getByName("build").mustRunAfter("clean")
     archivesBaseName = "InventoryOfDrinks"
     destinationDirectory = file("snapshots")
     from "."
     excludes = [".gradle", ".idea", "snapshots"]
 }
+
+build.mustRunAfter clean
