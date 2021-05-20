@@ -21,3 +21,12 @@ test {
         events "passed", "skipped", "failed"
     }
 }
+
+task createSnapshot(type: Zip) {
+    dependsOn "clean", "build"
+    tasks.getByName("build").mustRunAfter("clean")
+    archivesBaseName = "InventoryOfDrinks"
+    destinationDirectory = file("snapshots")
+    from "."
+    excludes = [".gradle", ".idea", "snapshots"]
+}
