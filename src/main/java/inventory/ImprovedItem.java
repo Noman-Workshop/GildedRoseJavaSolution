@@ -19,8 +19,9 @@ public class ImprovedItem extends Item {
 		return new ImprovedItem(name, sellIn, quality);
 	}
 	
-	public void setQualityUpdater(Updater updater) {
+	public ImprovedItem setUpdater(Updater updater) {
 		this.updater = updater;
+		return this;
 	}
 	
 	public void processDayEnd() {
