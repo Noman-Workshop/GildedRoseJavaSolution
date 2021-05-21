@@ -10,11 +10,6 @@ class InventoryTest {
 	
 	Inventory app;
 	
-	@AfterEach
-	public void LogInventory() {
-		System.out.println(app);
-	}
-	
 	@Test
 	void DeprecatedInventoryItemTest() {
 		Item[] items = new Item[] {new Item("foo", 0, 0)};
@@ -28,6 +23,11 @@ class InventoryTest {
 		app = new Inventory(items);
 		app.processDayEnd();
 		assertEquals("foo", app.items[0].name);
+	}
+	
+	@AfterEach
+	public void LogInventory() {
+		System.out.println(app);
 	}
 	
 }
