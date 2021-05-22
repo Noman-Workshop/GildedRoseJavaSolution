@@ -13,7 +13,7 @@ public class AgedBrieTest {
 	
 	private Inventory app;
 	private final int sellInDefault = 10;
-	private final int qualityDefault = 20;
+	private final int qualityDefault = 10;
 	
 	/* ================================ SETUP ==================================== */
 	
@@ -43,7 +43,7 @@ public class AgedBrieTest {
 	void QualityIncrementWithinSellInDaysTest() {
 		for (int daysPassed = 1; daysPassed <= sellInDefault; daysPassed++) {
 			app.processDayEnd();
-			assertEquals(qualityDefault + daysPassed, getTestItem().quality);
+			assertEquals(Math.min(qualityDefault + daysPassed, 50), getTestItem().quality);
 			System.out.println("After " + daysPassed + " days item quality status: " + getTestItem().quality);
 		}
 	}

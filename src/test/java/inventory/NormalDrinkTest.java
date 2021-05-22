@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class NormalDrinkTest {
 	
 	private Inventory app;
-	private final int sellInDefault = 10;
-	private final int qualityDefault = 40;
+	private final int sellInDefault = 50;
+	private final int qualityDefault = 20;
 	
 	/* ================================ SETUP ==================================== */
 	
@@ -43,7 +43,7 @@ class NormalDrinkTest {
 	void QualityDecrementWithinSellInDaysTest() {
 		for (int daysPassed = 1; daysPassed <= sellInDefault; daysPassed++) {
 			app.processDayEnd();
-			assertEquals(qualityDefault - daysPassed, getTestItem().quality);
+			assertEquals(Math.max(qualityDefault - daysPassed, 0), getTestItem().quality);
 			System.out.println("After " + daysPassed + " days item quality status: " + getTestItem().quality);
 		}
 	}
@@ -59,7 +59,7 @@ class NormalDrinkTest {
 		int qualityRemainingAfterSellInDays = getTestItem().quality;
 		for (int daysPassed = 1; getTestItem().quality > 0; daysPassed++) {
 			app.processDayEnd();
-			assertEquals(qualityRemainingAfterSellInDays - daysPassed * 2, getTestItem().quality);
+			assertEquals(Math.max(qualityRemainingAfterSellInDays - daysPassed * 2, 0), getTestItem().quality);
 			System.out.println("After " + daysPassed + " days past sellIn days item quality status: " + getTestItem().quality);
 		}
 	}
