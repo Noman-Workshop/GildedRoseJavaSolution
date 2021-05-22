@@ -39,7 +39,7 @@ class NormalDrinkTest {
 	}
 	
 	@Test
-	@DisplayName ("Quality decreases by 1 upto sellIn date as update on end of day is processed")
+	@DisplayName ("Quality decreases by 1 upto sellIn day expired as update on end of day is processed")
 	void QualityDecrementWithinSellInDaysTest() {
 		for (int daysPassed = 1; daysPassed <= sellInDefault; daysPassed++) {
 			app.processDayEnd();
@@ -73,7 +73,7 @@ class NormalDrinkTest {
 		
 		System.out.println("After item quality hit lower bound item status: " + getTestItem());
 		
-		for (int i = 0; i < daysPassedAfterQualityIs0; i++) {
+		for (int daysPassed = 0; daysPassed < daysPassedAfterQualityIs0; daysPassed++) {
 			app.processDayEnd();
 		}
 		assertEquals(0, getTestItem().quality);
