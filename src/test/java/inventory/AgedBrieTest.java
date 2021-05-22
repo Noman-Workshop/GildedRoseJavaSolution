@@ -21,11 +21,11 @@ public class AgedBrieTest {
 	@BeforeEach
 	void setup(TestInfo testInfo) {
 		System.out.println("\nStarting test: " + testInfo.getDisplayName() + "\n");
-		Item[] normalDrinks = new Item[] {
+		Item[] brieDrinks = new Item[] {
 				new Item("Aged Brie", SELL_IN_DEFAULT, QUALITY_DEFAULT)
 		};
-		System.out.println("Created aged brie drinks: " + Arrays.toString(normalDrinks));
-		app = new Inventory(normalDrinks);
+		System.out.println("Created aged brie drinks: " + Arrays.toString(brieDrinks));
+		app = new Inventory(brieDrinks);
 		System.out.println("Created inventory: " + app);
 	}
 	

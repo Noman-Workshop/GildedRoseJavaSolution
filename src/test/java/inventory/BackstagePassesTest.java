@@ -21,11 +21,11 @@ public class BackstagePassesTest {
 	@BeforeEach
 	void setup(TestInfo testInfo) {
 		System.out.println("\nStarting test: " + testInfo.getDisplayName() + "\n");
-		Item[] normalDrinks = new Item[] {
+		Item[] backstagePassesDrinks = new Item[] {
 				new Item("Backstage passes to a TAFKAL80ETC concert", SELL_IN_DEFAULT, QUALITY_DEFAULT)
 		};
-		System.out.println("Created backstage passes drinks: " + Arrays.toString(normalDrinks));
-		app = new Inventory(normalDrinks);
+		System.out.println("Created backstage passes drinks: " + Arrays.toString(backstagePassesDrinks));
+		app = new Inventory(backstagePassesDrinks);
 		System.out.println("Created inventory: " + app);
 	}
 	
