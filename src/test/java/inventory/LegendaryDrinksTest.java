@@ -17,8 +17,8 @@ import static inventory.InventoryTest.app;
 import static inventory.InventoryTest.getTestItem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DisplayName ("Legendary Items Test")
-public class LegendaryItemsTest {
+@DisplayName ("Legendary Drinks")
+public class LegendaryDrinksTest {
 	
 	private static final int SELL_IN_DEFAULT = 10;
 	private static final int QUALITY_DEFAULT = 80;
