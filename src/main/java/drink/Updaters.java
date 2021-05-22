@@ -31,13 +31,17 @@ public enum Updaters {
 	
 	BACKSTAGE_PASSES(item -> {
 		item.sellIn--;
-		if (item.sellIn == 0) {
+		if (item.sellIn < 0) {
 			item.quality = 0;
-		} else if (item.sellIn <= 5) {
-			item.quality += 5;
-		} else if (item.sellIn <= 10) {
+		} else if (item.sellIn < 5) {
+			item.quality += 3;
+		} else if (item.sellIn < 10) {
 			item.quality += 2;
+		} else {
+			item.quality += 1;
 		}
+		
+		Utility.constrainQualityBound(item, 0, 50);
 	}),
 	
 	CONJURED(item -> {

@@ -1,11 +1,13 @@
 package inventory;
 
+import drink.Updaters;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 
+import static inventory.ImprovedItem.CreateItem;
 import static inventory.InventoryTest.app;
 import static inventory.InventoryTest.getTestItem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,7 +24,8 @@ public class BackstagePassesTest {
 	void setup(TestInfo testInfo) {
 		System.out.println("\nStarting test: " + testInfo.getDisplayName() + "\n");
 		Item[] backstagePassesDrinks = new Item[] {
-				new Item("Backstage passes to a TAFKAL80ETC concert", SELL_IN_DEFAULT, QUALITY_DEFAULT)
+				CreateItem("Backstage passes to a TAFKAL80ETC concert", SELL_IN_DEFAULT, QUALITY_DEFAULT)
+						.setUpdater(Updaters.BACKSTAGE_PASSES.getUpdater())
 		};
 		System.out.println("Created backstage passes drinks: " + Arrays.toString(backstagePassesDrinks));
 		app = new Inventory(backstagePassesDrinks);
