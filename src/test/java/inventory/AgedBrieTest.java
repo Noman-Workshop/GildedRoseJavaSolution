@@ -40,7 +40,7 @@ public class AgedBrieTest {
 	
 	@Test
 	@DisplayName ("Quality increases by 1 as update on end of day is processed")
-	void QualityDecrementWithinSellInDaysTest() {
+	void QualityIncrementWithinSellInDaysTest() {
 		for (int daysPassed = 1; daysPassed <= sellInDefault; daysPassed++) {
 			app.processDayEnd();
 			assertEquals(qualityDefault + daysPassed, getTestItem().quality);
@@ -50,7 +50,7 @@ public class AgedBrieTest {
 	
 	@Test
 	@DisplayName ("Quality increases by 2 after sellIn days expired as update on end of day is processed")
-	void QualityDecrementAfterSellInDaysTest() {
+	void QualityIncrementAfterSellInDaysTest() {
 		for (int daysPassed = 1; daysPassed <= sellInDefault; daysPassed++) {
 			app.processDayEnd();
 		}
@@ -64,9 +64,9 @@ public class AgedBrieTest {
 		}
 	}
 	
-	@ParameterizedTest (name = "Quality of item doesn''t increase after {0} days past quality is 50")
+	@ParameterizedTest (name = "Quality update of item halts after {0} days past quality is 50")
 	@ValueSource (ints = {10, 20, 40, 70, 1000})
-	void QualityDecrementAfterUpperBoundHitTest(int daysPassedAfterQualityIs0) {
+	void QualityHaltAfterUpperBoundHitTest(int daysPassedAfterQualityIs0) {
 		while (getTestItem().quality < 50) {
 			app.processDayEnd();
 		}
