@@ -15,13 +15,17 @@ public enum Updaters {
 		Utility.constrainQualityBound(item, 0, 50);
 	}),
 	
-	AGED_BRIE(item -> {
+	AGED(item -> {
 		item.sellIn--;
-		item.quality += 1;
+		if (item.sellIn >= 0) {
+			item.quality += 1;
+		} else {
+			item.quality += 2;
+		}
 		Utility.constrainQualityBound(item, 0, 50);
 	}),
 	
-	SULFURUS(item -> {
+	LEGENDARY(item -> {
 		Utility.constrainQualityBound(item, 80, 80);
 	}),
 	
