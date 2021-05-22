@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 
+import static inventory.ImprovedItem.CreateItem;
 import static inventory.InventoryTest.app;
 import static inventory.InventoryTest.getTestItem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,7 +23,7 @@ class CommonDrinksTest {
 	void setup(TestInfo testInfo) {
 		System.out.println("\nStarting test: " + testInfo.getDisplayName() + "\n");
 		Item[] commonDrinks = new Item[] {
-				new Item("beer", SELL_IN_DEFAULT, QUALITY_DEFAULT)
+				CreateItem("beer", SELL_IN_DEFAULT, QUALITY_DEFAULT)
 		};
 		
 		System.out.println("Created normal drinks: " + Arrays.toString(commonDrinks));
