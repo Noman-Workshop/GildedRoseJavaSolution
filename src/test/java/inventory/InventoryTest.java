@@ -15,11 +15,11 @@ class InventoryTest {
 		System.out.println("Items created: " + Arrays.toString(items));
 		Inventory app = new Inventory(items);
 		System.out.println("Inventory created: " + app);
-		app.updateQuality();
-		System.out.println("After 1 call to update quality inventory status: " + app);
+		app.processDayEnd();
 		assertEquals("foo", app.items[0].name);
 		assertEquals(-1, app.items[0].sellIn);
 		assertEquals(0, app.items[0].quality);
+		System.out.println("After 1 call to update quality inventory status: " + app);
 	}
 	
 	
