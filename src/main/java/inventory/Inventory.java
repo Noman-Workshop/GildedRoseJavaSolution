@@ -2,9 +2,9 @@ package inventory;
 
 import java.util.Arrays;
 
-public class Inventory {
+class Inventory {
 	
-	public Item[] items;
+	Item[] items;
 	
 	public Inventory(Item[] items) {
 		this.items = items;
@@ -23,6 +23,8 @@ public class Inventory {
 	
 	@Override
 	public String toString() {
-		return Arrays.toString(items);
+		return "Inventory{" +
+				"items=" + Arrays.toString(items) +
+				'}';
 	}
 }

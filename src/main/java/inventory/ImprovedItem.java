@@ -4,24 +4,19 @@ import drink.Updaters;
 
 public class ImprovedItem extends Item {
 	
-	public interface Updater {
-		
-		void onDayEnd(ImprovedItem item);
-	}
-	
-	private Updater updater = Updaters.DEFAULT.getUpdater();
+	private Updater updater;
 	
 	private ImprovedItem(String name, int sellIn, int quality) {
 		super(name, sellIn, quality);
+		this.updater = Updaters.COMMON.getUpdater();
 	}
 	
-	public static ImprovedItem CreateImprovedItem(String name, int sellIn, int quality) {
+	public static ImprovedItem CreateItem(String name, int sellIn, int quality) {
 		return new ImprovedItem(name, sellIn, quality);
 	}
 	
-	public ImprovedItem setUpdater(Updater updater) {
+	public void setUpdater(Updater updater) {
 		this.updater = updater;
-		return this;
 	}
 	
 	public void processDayEnd() {

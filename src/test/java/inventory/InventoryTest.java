@@ -1,33 +1,46 @@
 package inventory;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
+import static inventory.ImprovedItem.CreateItem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class InventoryTest {
 	
-	Inventory app;
+	public static Inventory app;
 	
 	@Test
-	void DeprecatedInventoryItemTest() {
-		Item[] items = new Item[] {new Item("foo", 0, 0)};
+	void InventoryCoreAPITest() {
+		Item[] items = new Item[] {CreateItem("foo", 0, 0)};
+		System.out.println("Items created: " + Arrays.toString(items));
 		app = new Inventory(items);
-		assertThrows(UnsupportedOperationException.class, app::processDayEnd);
-	}
-	
-	@Test
-	void CreateInventoryTest() {
-		ImprovedItem[] items = new ImprovedItem[] {ImprovedItem.CreateImprovedItem("foo", 0, 0)};
-		app = new Inventory(items);
+		System.out.println("Inventory created: " + app);
 		app.processDayEnd();
-		assertEquals("foo", app.items[0].name);
+		assertEquals("foo", getTestItem().name);
+		assertEquals(-1, getTestItem().sellIn);
+		assertEquals(0, getTestItem().quality);
+		System.out.println("After 1 call to update quality inventory status: " + app);
 	}
 	
-	@AfterEach
-	public void LogInventory() {
-		System.out.println(app);
+	@Test
+	void DeprecatedItemUseTest() {
+		Item[] items = new Item[] {new Item("foo", 0, 0)};
+		System.out.println("Items created: " + Arrays.toString(items));
+		app = new Inventory(items);
+		System.out.println("Inventory created: " + app);
+		assertThrows(Exception.class, () -> app.processDayEnd());
+		assertEquals(0, getTestItem().sellIn);
+		assertEquals(0, getTestItem().quality);
+		System.out.println("After 1 failed call to update quality inventory status: " + app);
+		System.out.println("update using of direct use of Item class is now deprecated forcefully.");
 	}
 	
+	/* ================================ UTILITY ==================================== */
+	
+	public static Item getTestItem() {
+		return app.items[0];
+	}
 }
