@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName ("Normal drinks")
 class NormalDrinkTest {
