@@ -66,7 +66,7 @@ class NormalDrinkTest {
 		}
 	}
 	
-	@ParameterizedTest (name = "Quality update of item halts after {0} days past quality is 0")
+	@ParameterizedTest (name = "Quality decrement of item halts after {0} days past quality is 0")
 	@ValueSource (ints = {10, 20, 40, 70, 1000})
 	void QualityHaltAfterLowerBoundHitTest(int daysPassedAfterQualityIs0) {
 		while (getTestItem().quality > 0) {

@@ -6,14 +6,15 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 
+import static inventory.InventoryTest.app;
+import static inventory.InventoryTest.getTestItem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName ("Aged Brie")
 public class AgedBrieTest {
 	
-	private Inventory app;
-	private final int sellInDefault = 10;
-	private final int qualityDefault = 10;
+	private final int SELL_IN_DEFAULT = 10;
+	private final int QUALITY_DEFAULT = 20;
 	
 	/* ================================ SETUP ==================================== */
 	
@@ -21,7 +22,7 @@ public class AgedBrieTest {
 	void setup(TestInfo testInfo) {
 		System.out.println("\nStarting test: " + testInfo.getDisplayName() + "\n");
 		Item[] normalDrinks = new Item[] {
-				new Item("Aged Brie", sellInDefault, qualityDefault)
+				new Item("Aged Brie", SELL_IN_DEFAULT, QUALITY_DEFAULT)
 		};
 		System.out.println("Created aged brie drinks: " + Arrays.toString(normalDrinks));
 		app = new Inventory(normalDrinks);
@@ -31,9 +32,9 @@ public class AgedBrieTest {
 	@Test
 	@DisplayName ("SellIn days decreases by 1 as update on end of day is processed")
 	void sellInDecrementTest() {
-		for (int daysPassed = 1; daysPassed <= sellInDefault; daysPassed++) {
+		for (int daysPassed = 1; daysPassed <= SELL_IN_DEFAULT; daysPassed++) {
 			app.processDayEnd();
-			assertEquals(sellInDefault - daysPassed, getTestItem().sellIn);
+			assertEquals(SELL_IN_DEFAULT - daysPassed, getTestItem().sellIn);
 			System.out.println("After " + daysPassed + " days item sellIn status: " + getTestItem().sellIn);
 		}
 	}
@@ -41,9 +42,9 @@ public class AgedBrieTest {
 	@Test
 	@DisplayName ("Quality increases by 1 as update on end of day is processed")
 	void QualityIncrementWithinSellInDaysTest() {
-		for (int daysPassed = 1; daysPassed <= sellInDefault; daysPassed++) {
+		for (int daysPassed = 1; daysPassed <= SELL_IN_DEFAULT; daysPassed++) {
 			app.processDayEnd();
-			assertEquals(Math.min(qualityDefault + daysPassed, 50), getTestItem().quality);
+			assertEquals(Math.min(QUALITY_DEFAULT + daysPassed, 50), getTestItem().quality);
 			System.out.println("After " + daysPassed + " days item quality status: " + getTestItem().quality);
 		}
 	}
@@ -51,7 +52,7 @@ public class AgedBrieTest {
 	@Test
 	@DisplayName ("Quality increases by 2 after sellIn days expired as update on end of day is processed")
 	void QualityIncrementAfterSellInDaysTest() {
-		for (int daysPassed = 1; daysPassed <= sellInDefault; daysPassed++) {
+		for (int daysPassed = 1; daysPassed <= SELL_IN_DEFAULT; daysPassed++) {
 			app.processDayEnd();
 		}
 		System.out.println("Item status after sellIn Days ended: " + getTestItem());
@@ -64,7 +65,7 @@ public class AgedBrieTest {
 		}
 	}
 	
-	@ParameterizedTest (name = "Quality update of item halts after {0} days past quality is 50")
+	@ParameterizedTest (name = "Quality increment of item halts after {0} days past quality is 50")
 	@ValueSource (ints = {10, 20, 40, 70, 1000})
 	void QualityHaltAfterUpperBoundHitTest(int daysPassedAfterQualityIs0) {
 		while (getTestItem().quality < 50) {
@@ -87,9 +88,4 @@ public class AgedBrieTest {
 		System.out.println("\nFinished test.\n");
 	}
 	
-	/* ================================ UTILITY ==================================== */
-	
-	private Item getTestItem() {
-		return app.items[0];
-	}
 }

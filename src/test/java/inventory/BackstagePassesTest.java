@@ -6,14 +6,15 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 
+import static inventory.InventoryTest.app;
+import static inventory.InventoryTest.getTestItem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName ("Backstage Passes")
 public class BackstagePassesTest {
 	
-	private Inventory app;
-	private final int sellInDefault = 20;
-	private final int qualityDefault = 10;
+	private final int SELL_IN_DEFAULT = 20;
+	private final int QUALITY_DEFAULT = 10;
 	
 	/* ================================ SETUP ==================================== */
 	
@@ -21,7 +22,7 @@ public class BackstagePassesTest {
 	void setup(TestInfo testInfo) {
 		System.out.println("\nStarting test: " + testInfo.getDisplayName() + "\n");
 		Item[] normalDrinks = new Item[] {
-				new Item("Backstage passes to a TAFKAL80ETC concert", sellInDefault, qualityDefault)
+				new Item("Backstage passes to a TAFKAL80ETC concert", SELL_IN_DEFAULT, QUALITY_DEFAULT)
 		};
 		System.out.println("Created backstage passes drinks: " + Arrays.toString(normalDrinks));
 		app = new Inventory(normalDrinks);
@@ -31,9 +32,9 @@ public class BackstagePassesTest {
 	@Test
 	@DisplayName ("SellIn days decreases by 1 as update on end of day is processed")
 	void sellInDecrementTest() {
-		for (int daysPassed = 1; daysPassed <= sellInDefault; daysPassed++) {
+		for (int daysPassed = 1; daysPassed <= SELL_IN_DEFAULT; daysPassed++) {
 			app.processDayEnd();
-			assertEquals(sellInDefault - daysPassed, getTestItem().sellIn);
+			assertEquals(SELL_IN_DEFAULT - daysPassed, getTestItem().sellIn);
 			System.out.println("After " + daysPassed + " days item sellIn status: " + getTestItem().sellIn);
 		}
 	}
@@ -41,9 +42,9 @@ public class BackstagePassesTest {
 	@Test
 	@DisplayName ("Quality increases by 1 upto 10 days of sellIn as update on end of day is processed")
 	void QualityIncrementWithinSellInDaysTest() {
-		for (int daysPassed = 1; daysPassed <= sellInDefault - 10; daysPassed++) {
+		for (int daysPassed = 1; daysPassed <= SELL_IN_DEFAULT - 10; daysPassed++) {
 			app.processDayEnd();
-			assertEquals(Math.min(qualityDefault + daysPassed, 50), getTestItem().quality);
+			assertEquals(Math.min(QUALITY_DEFAULT + daysPassed, 50), getTestItem().quality);
 			System.out.println("After " + daysPassed + " days item quality status: " + getTestItem().quality);
 		}
 	}
@@ -51,7 +52,7 @@ public class BackstagePassesTest {
 	@Test
 	@DisplayName ("Quality increases by 2 from 10~5 sellIn days as update on end of day is processed")
 	void QualityIncrementWithin10SellInDaysTest() {
-		for (int daysPassed = 1; daysPassed <= sellInDefault - 10; daysPassed++) {
+		for (int daysPassed = 1; daysPassed <= SELL_IN_DEFAULT - 10; daysPassed++) {
 			app.processDayEnd();
 		}
 		System.out.println("With 10 days left of sellIn item status: " + getTestItem());
@@ -67,7 +68,7 @@ public class BackstagePassesTest {
 	@Test
 	@DisplayName ("Quality increases by 3 from 5~0 sellIn as update on end of day is processed")
 	void QualityIncrementWithin5sellInDaysTest() {
-		for (int daysPassed = 1; daysPassed <= sellInDefault - 5; daysPassed++) {
+		for (int daysPassed = 1; daysPassed <= SELL_IN_DEFAULT - 5; daysPassed++) {
 			app.processDayEnd();
 		}
 		System.out.println("With 10 days left of sellIn item status: " + getTestItem());
@@ -80,7 +81,7 @@ public class BackstagePassesTest {
 		}
 	}
 	
-	@ParameterizedTest (name = "Quality update of item halts after {0} days past quality is 50")
+	@ParameterizedTest (name = "Quality increment of item halts after {0} days past quality is 50")
 	@ValueSource (ints = {10, 20, 40, 70, 1000})
 	void QualityHaltAfterUpperBoundHitWithinSellInTest(int daysPassedAfterQualityIs0) {
 		getTestItem().quality = 50;
@@ -95,11 +96,10 @@ public class BackstagePassesTest {
 		System.out.println("After " + daysPassedAfterQualityIs0 + " days past quality is 50, item quality status: " + getTestItem().quality);
 	}
 	
-	@DisplayName ("Quality halts to 0 after sellIn days expired as update on end of day is processed")
-	@ParameterizedTest (name = "Quality update of item halts after {0} days past sellIn")
+	@ParameterizedTest (name = "Quality update of item halts to 0 after {0} days past sellIn")
 	@ValueSource (ints = {10, 20, 40, 70, 1000})
 	void QualityHaltAfterSellInDaysTest(int daysPassedAfterSellIn) {
-		for (int daysPassed = 1; daysPassed <= sellInDefault + 1; daysPassed++) {
+		for (int daysPassed = 1; daysPassed <= SELL_IN_DEFAULT + 1; daysPassed++) {
 			app.processDayEnd();
 		}
 		System.out.println("Item status after sellIn Days ended: " + getTestItem());
@@ -118,12 +118,6 @@ public class BackstagePassesTest {
 	@AfterEach
 	void tearDown() {
 		System.out.println("\nFinished test.\n");
-	}
-	
-	/* ================================ UTILITY ==================================== */
-	
-	private Item getTestItem() {
-		return app.items[0];
 	}
 	
 }
