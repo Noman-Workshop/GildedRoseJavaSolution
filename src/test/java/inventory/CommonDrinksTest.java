@@ -10,8 +10,8 @@ import static inventory.InventoryTest.app;
 import static inventory.InventoryTest.getTestItem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DisplayName ("Normal drinks")
-class NormalDrinkTest {
+@DisplayName ("Common drinks")
+class CommonDrinksTest {
 	
 	private static final int SELL_IN_DEFAULT = 10;
 	private static final int QUALITY_DEFAULT = 20;
@@ -21,12 +21,12 @@ class NormalDrinkTest {
 	@BeforeEach
 	void setup(TestInfo testInfo) {
 		System.out.println("\nStarting test: " + testInfo.getDisplayName() + "\n");
-		Item[] normalDrinks = new Item[] {
+		Item[] commonDrinks = new Item[] {
 				new Item("beer", SELL_IN_DEFAULT, QUALITY_DEFAULT)
 		};
 		
-		System.out.println("Created normal drinks: " + Arrays.toString(normalDrinks));
-		app = new Inventory(normalDrinks);
+		System.out.println("Created normal drinks: " + Arrays.toString(commonDrinks));
+		app = new Inventory(commonDrinks);
 		System.out.println("Created normal drinks inventory: " + app);
 	}
 	

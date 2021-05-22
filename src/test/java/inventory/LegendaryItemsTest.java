@@ -15,8 +15,8 @@ import static inventory.InventoryTest.app;
 import static inventory.InventoryTest.getTestItem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DisplayName ("Sulfurus")
-public class SulfurusTest {
+@DisplayName ("Legendary Items Test")
+public class LegendaryItemsTest {
 	
 	private static final int SELL_IN_DEFAULT = 10;
 	private static final int QUALITY_DEFAULT = 80;
@@ -26,12 +26,12 @@ public class SulfurusTest {
 	@BeforeEach
 	void setup(TestInfo testInfo) {
 		System.out.println("\nStarting test: " + testInfo.getDisplayName() + "\n");
-		Item[] sulfurusDrinks = new Item[] {
+		Item[] legendaryItems = new Item[] {
 				new Item("Sulfuras, Hand of Ragnaros", SELL_IN_DEFAULT, QUALITY_DEFAULT)
 		};
 		
-		System.out.println("Created sulfurus drinks: " + Arrays.toString(sulfurusDrinks));
-		app = new Inventory(sulfurusDrinks);
+		System.out.println("Created sulfurus drinks: " + Arrays.toString(legendaryItems));
+		app = new Inventory(legendaryItems);
 		System.out.println("Created sulfurus drinks inventory: " + app);
 	}
 	
