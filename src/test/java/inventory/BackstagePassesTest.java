@@ -73,7 +73,7 @@ public class BackstagePassesTest {
 		for (int daysPassed = 1; daysPassed <= SELL_IN_DEFAULT - 5; daysPassed++) {
 			app.processDayEnd();
 		}
-		System.out.println("With 10 days left of sellIn item status: " + getTestItem());
+		System.out.println("With 5 days left of sellIn item status: " + getTestItem());
 		
 		int qualityRemaining = getTestItem().quality;
 		for (int daysPassed = 1; daysPassed <= 5; daysPassed++) {
@@ -129,6 +129,12 @@ public class BackstagePassesTest {
 					getTestItem().quality = -70;
 					System.out.println("Quality of test item altered to: " + getTestItem().quality);
 					QualityIncrementWithin10SellInDaysTest();
+					tearDown();
+				}),
+				DynamicTest.dynamicTest("Always Decrease Quality when possible", () -> {
+					setup(CreateDynamicTestInfo("Always decrease quality when possible even after sellIn days", null, Optional.of(this.getClass()), Optional.empty()));
+					getTestItem().quality = -70;
+					System.out.println("Quality of test item altered to: " + getTestItem().quality);
 					QualityIncrementWithin5sellInDaysTest();
 					tearDown();
 				})
