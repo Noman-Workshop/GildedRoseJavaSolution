@@ -12,7 +12,7 @@ public enum Updaters {
 			item.quality -= 2;
 		}
 		
-		Utility.constrainQualityBound(item, 0, item.quality);
+		Utility.constrainQualityBound(item, 0, Math.max(item.quality, 50));
 	}),
 	
 	AGED(item -> {
@@ -51,7 +51,7 @@ public enum Updaters {
 		} else {
 			item.quality -= 4;
 		}
-		Utility.constrainQualityBound(item, 0, item.quality);
+		Utility.constrainQualityBound(item, 0, Math.max(item.quality, 50));
 	});
 	
 	Updaters(Updater updater) {
