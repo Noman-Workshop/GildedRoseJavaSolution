@@ -30,4 +30,11 @@ task createSnapshot(type: Zip) {
     include "src/**", "build/reports/**", "build.gradle"
 }
 
+
+task runTextTest(type: JavaExec) {
+    main = "inventory.TextTestFixture"
+    classpath = sourceSets.test.runtimeClasspath
+    args "30"
+}
+
 build.mustRunAfter clean
