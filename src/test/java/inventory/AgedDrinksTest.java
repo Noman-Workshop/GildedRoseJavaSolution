@@ -12,7 +12,7 @@ import static inventory.InventoryTest.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName ("Aged Brie")
-public class AgedBrieTest {
+public class AgedDrinksTest {
 	
 	private final int SELL_IN_DEFAULT = 10;
 	private final int QUALITY_DEFAULT = 20;
