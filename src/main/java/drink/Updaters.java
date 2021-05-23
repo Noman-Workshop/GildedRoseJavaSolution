@@ -1,6 +1,6 @@
 package drink;
 
-import inventory.ImprovedItem;
+import inventory.Item;
 import inventory.Updater;
 
 public enum Updaters {
@@ -12,7 +12,7 @@ public enum Updaters {
 			item.quality -= 2;
 		}
 		
-		Utility.constrainQualityBound(item, 0, 50);
+		Utility.constrainQualityBound(item, 0, item.quality);
 	}),
 	
 	AGED(item -> {
@@ -51,7 +51,7 @@ public enum Updaters {
 		} else {
 			item.quality -= 4;
 		}
-		Utility.constrainQualityBound(item, 0, 50);
+		Utility.constrainQualityBound(item, 0, item.quality);
 	});
 	
 	Updaters(Updater updater) {
@@ -66,7 +66,7 @@ public enum Updaters {
 	
 	public static class Utility {
 		
-		public static void constrainQualityBound(ImprovedItem item, int lowerBound, int upperBound) {
+		public static void constrainQualityBound(Item item, int lowerBound, int upperBound) {
 			if (item.quality < lowerBound) {
 				item.quality = lowerBound;
 			}
