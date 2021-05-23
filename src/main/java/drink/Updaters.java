@@ -22,7 +22,7 @@ public enum Updaters {
 		} else {
 			item.quality += 2;
 		}
-		Utility.constrainQualityBound(item, 0, 50);
+		Utility.constrainQualityBound(item, item.quality, 50);
 	}),
 	
 	LEGENDARY(item -> {
@@ -41,7 +41,7 @@ public enum Updaters {
 			item.quality += 1;
 		}
 		
-		Utility.constrainQualityBound(item, 0, 50);
+		Utility.constrainQualityBound(item, item.quality, 50);
 	}),
 	
 	CONJURED(item -> {

@@ -6,10 +6,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Optional;
 
 import static inventory.ImprovedItem.CreateItem;
-import static inventory.InventoryTest.app;
-import static inventory.InventoryTest.getTestItem;
+import static inventory.InventoryTest.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName ("Backstage Passes")
@@ -45,9 +46,10 @@ public class BackstagePassesTest {
 	@Test
 	@DisplayName ("Quality increases by 1 upto 10 days of sellIn as update on end of day is processed")
 	void QualityIncrementWithinSellInDaysTest() {
+		int currentQuality = getTestItem().quality;
 		for (int daysPassed = 1; daysPassed <= SELL_IN_DEFAULT - 10; daysPassed++) {
 			app.processDayEnd();
-			assertEquals(Math.min(QUALITY_DEFAULT + daysPassed, 50), getTestItem().quality);
+			assertEquals(Math.min(currentQuality + daysPassed, 50), getTestItem().quality);
 			System.out.println("After " + daysPassed + " days item quality status: " + getTestItem().quality);
 		}
 	}
@@ -74,7 +76,7 @@ public class BackstagePassesTest {
 		for (int daysPassed = 1; daysPassed <= SELL_IN_DEFAULT - 5; daysPassed++) {
 			app.processDayEnd();
 		}
-		System.out.println("With 10 days left of sellIn item status: " + getTestItem());
+		System.out.println("With 5 days left of sellIn item status: " + getTestItem());
 		
 		int qualityRemaining = getTestItem().quality;
 		for (int daysPassed = 1; daysPassed <= 5; daysPassed++) {
@@ -115,6 +117,33 @@ public class BackstagePassesTest {
 		System.out.println("After " + daysPassedAfterSellIn + " days past sellIn days item quality status: " + getTestItem().quality);
 	}
 	
+	@TestFactory
+	Collection<DynamicTest> AlwaysIncrementQualityWhenPossibleTest() {
+		return Arrays.asList(
+				DynamicTest.dynamicTest("Always decrease quality when possible", () -> {
+					setup(CreateDynamicTestInfo("Always decrease quality when possible", null, Optional.of(this.getClass()), Optional.empty()));
+					getTestItem().quality = -70;
+					System.out.println("Quality of test item altered to: " + getTestItem().quality);
+					QualityIncrementWithinSellInDaysTest();
+					tearDown();
+				}),
+				DynamicTest.dynamicTest("Always Decrease Quality when possible", () -> {
+					setup(CreateDynamicTestInfo("Always decrease quality when possible even after sellIn days", null, Optional.of(this.getClass()), Optional.empty()));
+					getTestItem().quality = -70;
+					System.out.println("Quality of test item altered to: " + getTestItem().quality);
+					QualityIncrementWithin10SellInDaysTest();
+					tearDown();
+				}),
+				DynamicTest.dynamicTest("Always Decrease Quality when possible", () -> {
+					setup(CreateDynamicTestInfo("Always decrease quality when possible even after sellIn days", null, Optional.of(this.getClass()), Optional.empty()));
+					getTestItem().quality = -70;
+					System.out.println("Quality of test item altered to: " + getTestItem().quality);
+					QualityIncrementWithin5sellInDaysTest();
+					tearDown();
+				})
+		);
+		
+	}
 	
 	/* ================================ TEAR DOWN ==================================== */
 	
