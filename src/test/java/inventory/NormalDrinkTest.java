@@ -85,7 +85,7 @@ class NormalDrinkTest {
 	}
 	
 	@TestFactory
-	Collection<DynamicTest> AlwaysDecreaseQualityWhenPossibleTest() {
+	Collection<DynamicTest> AlwaysDecrementQualityWhenPossibleTest() {
 		return Arrays.asList(
 				DynamicTest.dynamicTest("Always decrease quality when possible", () -> {
 					setup(CreateDynamicTestInfo("Always decrease quality when possible", null, Optional.of(this.getClass()), Optional.empty()));
