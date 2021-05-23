@@ -1,4 +1,4 @@
-#Gilded Rose Kata Solution in Java
+# Gilded Rose Kata Solution in Java
 
 Gilded Rose Requirements Specification
 ======================================
