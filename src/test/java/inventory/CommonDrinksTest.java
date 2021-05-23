@@ -5,10 +5,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Optional;
 
 import static inventory.ImprovedItem.CreateItem;
-import static inventory.InventoryTest.app;
-import static inventory.InventoryTest.getTestItem;
+import static inventory.InventoryTest.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName ("Common drinks")
@@ -44,9 +45,10 @@ class CommonDrinksTest {
 	@Test
 	@DisplayName ("Quality decreases by 1 upto sellIn days expired as update on end of day is processed")
 	void QualityDecrementWithinSellInDaysTest() {
+		int currentQuality = getTestItem().quality;
 		for (int daysPassed = 1; daysPassed <= SELL_IN_DEFAULT; daysPassed++) {
 			app.processDayEnd();
-			assertEquals(Math.max(QUALITY_DEFAULT - daysPassed, 0), getTestItem().quality);
+			assertEquals(Math.max(currentQuality - daysPassed, 0), getTestItem().quality);
 			System.out.println("After " + daysPassed + " days item quality status: " + getTestItem().quality);
 		}
 	}
@@ -81,6 +83,27 @@ class CommonDrinksTest {
 		}
 		assertEquals(0, getTestItem().quality);
 		System.out.println("After " + daysPassedAfterQualityIs0 + " days past quality is 0, item quality status: " + getTestItem().quality);
+	}
+	
+	@TestFactory
+	Collection<DynamicTest> AlwaysDecreaseQualityWhenPossibleTest() {
+		return Arrays.asList(
+				DynamicTest.dynamicTest("Always decrease quality when possible", () -> {
+					setup(CreateDynamicTestInfo("Always decrease quality when possible", null, Optional.of(this.getClass()), Optional.empty()));
+					getTestItem().quality = 72;
+					System.out.println("Quality of test item altered to: " + getTestItem().quality);
+					QualityDecrementWithinSellInDaysTest();
+					tearDown();
+				}),
+				DynamicTest.dynamicTest("Always Decrease Quality when possible", () -> {
+					setup(CreateDynamicTestInfo("Always decrease quality when possible even after sellIn days", null, Optional.of(this.getClass()), Optional.empty()));
+					getTestItem().quality = 72;
+					System.out.println("Quality of test item altered to: " + getTestItem().quality);
+					QualityDecrementAfterSellInDaysTest();
+					tearDown();
+				})
+		);
+		
 	}
 	
 	/* ================================ TEAR DOWN ==================================== */

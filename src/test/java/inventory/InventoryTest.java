@@ -1,8 +1,12 @@
 package inventory;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Optional;
+import java.util.Set;
 
 import static inventory.ImprovedItem.CreateItem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,5 +46,29 @@ class InventoryTest {
 	
 	public static Item getTestItem() {
 		return app.items[0];
+	}
+	
+	public static TestInfo CreateDynamicTestInfo(String displayName, Set<String> tags, Optional<Class<?>> testClass, Optional<Method> testMethod) {
+		return new TestInfo() {
+			@Override
+			public String getDisplayName() {
+				return displayName;
+			}
+			
+			@Override
+			public Set<String> getTags() {
+				return tags;
+			}
+			
+			@Override
+			public Optional<Class<?>> getTestClass() {
+				return testClass;
+			}
+			
+			@Override
+			public Optional<Method> getTestMethod() {
+				return testMethod;
+			}
+		};
 	}
 }
